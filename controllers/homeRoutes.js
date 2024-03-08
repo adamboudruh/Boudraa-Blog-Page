@@ -25,6 +25,20 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Route to render the dashboard
+router.get('/dashboard', (req, res) => {
+  // If the user is already logged in, redirect them to the homepage
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
+  }
+
+  // If the user is not logged in, render the 'login' view
+  res.render('dashboard', { 
+    logged_in: req.session.logged_In,
+  })
+});
+
 // Route to render the login page
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect them to the homepage
@@ -52,5 +66,7 @@ router.get('/signup', (req, res) => {
     logged_in: req.session.logged_In,
   })
 });
+
+//home and dashboard
 
 module.exports = router; // Export the router module for usage in other files

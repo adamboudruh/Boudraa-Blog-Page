@@ -1,0 +1,36 @@
+footer {
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 50;
+    right: 50;
+    color: #321C06;
+}
+
+nav a {
+    text-decoration: none;
+    color: beige;
+}
+
+h1 {
+    font-size: 58;
+    font-weight: lighter;
+    color: beige;
+}
+
+nav a:hover {
+    background-color: #6B1107;
+    transform: scale(1.5,1);
+}
+
+header {
+    background-color: #321C06
+}
+
+body {
+    background-color: beige
+}
+
+* {
+    font-family: 'Courier';
+}
