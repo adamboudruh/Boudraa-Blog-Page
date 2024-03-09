@@ -1,5 +1,6 @@
 // Define an asynchronous function to handle the logout process
 const logout = async () => {
+  console.log('Logging out');
   // Send a POST request to the '/api/users/logout' endpoint to log the user out
   const response = await fetch('/api/users/logout', {
     method: 'POST', // Use the POST method
@@ -10,6 +11,7 @@ const logout = async () => {
   if (response.ok) {
     // If logout is successful, redirect the user to the login page
     document.location.replace('/login');
+    console.log("You have been logged out!");
   } else {
     // If logout fails, display an alert message
     alert('Failed to log out');
@@ -20,4 +22,4 @@ const logout = async () => {
 // document.querySelector('#logout').addEventListener('click', logout);
 
 // Add an event listener to the logout link in the navbar
-document.querySelector('#logout-link').addEventListener('click', logout);
+document.querySelector('.logout-link').addEventListener('click', logout);

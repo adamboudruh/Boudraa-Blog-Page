@@ -23,10 +23,11 @@ router.post('/login', async (req, res) => {
       res.status(400).json({ message: 'Incorrect email or password, please try again' });
       return;
     }
+    console.info(userData);
 
     // If the email and password are correct, save the user's session
     req.session.save(() => {
-      req.session.user_id = userData.id; // Store user ID in the session
+      req.session.user_data = userData; // Store user ID in the session
       req.session.logged_in = true; // Set logged_in flag to true in the session
       
       // Send a response indicating successful login along with user data
@@ -49,27 +50,17 @@ router.post('/signup', async (req, res) => {
     });
 
     console.info(`User of id ${dbUserData.id} has been created`);
+    console.info(dbUserData);
 
     req.session.save(() => {
-      req.session.user_id = dbUserData.id; 
-      req.session.logged_In = true;
+      req.session.user_data = dbUserData; 
+      req.session.logged_in = true;
       res.status(200).json(dbUserData);
     });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
-});
-
-// Middleware to add user data to res.locals
-router.use((req, res, next) => {
-  if (req.session.logged_in) {
-    res.locals.logged_in = true;
-    res.locals.user_id = req.session.user_id;
-  } else {
-    res.locals.logged_in = false;
-  }
-  next();
 });
 
 // Route to handle user logout
@@ -80,6 +71,7 @@ router.post('/logout', (req, res) => {
     req.session.destroy(() => {
       res.status(204).end(); // Send a success response with status code 204 (No Content)
     });
+    res.render('login');
   } else {
     // If the user is not logged in, send a 404 error response
     res.status(404).end();

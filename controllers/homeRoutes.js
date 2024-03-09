@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
     res.render('homepage', {
       users, // Pass the serialized user data to the view
       logged_in: req.session.logged_in, // Pass the logged_in variable to the view
+      user_data: req.session.user_data
     });
   } catch (err) {
     // If an error occurs during data retrieval or rendering, send a 500 (Internal Server Error) response
@@ -36,6 +37,7 @@ router.get('/dashboard', (req, res) => {
   // If the user is not logged in, render the 'login' view
   res.render('dashboard', { 
     logged_in: req.session.logged_In,
+    user_data: req.session.user_data
   })
 });
 
@@ -50,6 +52,7 @@ router.get('/login', (req, res) => {
   // If the user is not logged in, render the 'login' view
   res.render('login', { 
     logged_in: req.session.logged_In,
+    user_data: req.session.user_data
   })
 });
 
