@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.user_data = userData; // Store user ID in the session
       req.session.logged_in = true; // Set logged_in flag to true in the session
-      
+      req.session.idle = false;
       // Send a response indicating successful login along with user data
       res.json({ user: userData, message: 'You are now logged in!' });
     });
@@ -55,6 +55,7 @@ router.post('/signup', async (req, res) => {
     req.session.save(() => {
       req.session.user_data = dbUserData; 
       req.session.logged_in = true;
+      req.session.idle = false;
       res.status(200).json(dbUserData);
     });
   } catch (err) {
@@ -78,6 +79,18 @@ router.post('/logout', (req, res) => {
   }
 });
 
+router.post('/idle', (req, res) => {
+  try {
+    console.info("Marking user as idle...");
+    req.session.save(() => {
+      req.session.idle = true;
+      res.status(200).json("Session has been marked as idle, log in again please.");
+    });
+  } catch (err) {
+    console.error("Error marking session as idle: " +err);
+    res.status(500).json(err);
+  }
+});
 
 
 module.exports = router; // Export the router module for usage in other files
