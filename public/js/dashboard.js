@@ -6,7 +6,7 @@ document.querySelector('#add-post').addEventListener('click', function () {
     document.querySelector('#add-post').classList.add('d-none');
 });
 
-document.querySelector('#cancel-post').addEventListener('click', function (event) {
+document.querySelector('#cancel-create').addEventListener('click', function (event) {
     event.preventDefault();
     console.log("Hiding post form...");
     document.querySelector('.new-post-container').classList.add('d-none');
@@ -27,9 +27,71 @@ document.querySelector('#create-post').addEventListener('click', createPost = as
             headers: { 'Content-Type': 'application/json' }, // Set request headers
         });
         // if response status is 401, make a modal pop up in the center of the screen asking them to relogin with a link to the log in screen
+        if (response.ok) {
+            console.info("Post added!");
+            document.location.reload();
+        }
         if (response.status === 401) {
             displayModal();
         }
     }
     else alert('Please enter a title and body before submitting');
 });
+
+const handlePostClick = (event) => {
+    const clickedPost = event.target.closest('.mini-post');
+    const postID = clickedPost.dataset.id;
+    fetch(`/api/blog/${postID}`, {
+        method: 'GET', // Use the GET method
+        headers: { 'Content-Type': 'application/json' }, // Set request headers
+    })
+        .then(response => {
+            if (response.status === 401){
+                displayModal();
+            }
+            else return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            const updateFormContainer = document.createElement('div');
+            updateFormContainer.classList.add('update-post-container');
+            updateFormContainer.innerHTML = `
+                <form class="form login-form update-post-form m-4 p-3">
+                    <h4 class="form-title">Update Blog Post</h4>
+                    <div class="form-group m-3">
+                        <label for="update-title">Title:</label>
+                        <input class="form-control" type="text" id="update-title" value="${data.title}" />
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="update-body">Body:</label>
+                        <textarea class="form-control" rows="5" id="update-body">${data.body}</textarea>
+                    </div>
+                    <div class="form-group m-3 d-flex justify-content-between">
+                        <button class="btn py-2 px-3" id="update-post">Update Post</button>
+                        <button class="btn py-2 px-3" id="delete-post">Delete Post</button>
+                        <button class="btn py-2 px-3" id="cancel-update">Cancel</button>
+                    </div>
+                </form>
+            `;
+            clickedPost.parentNode.replaceChild(updateFormContainer, clickedPost);
+            document.querySelector('#cancel-update').addEventListener('click', () => cancelUpdate(event, updateFormContainer, data))
+        })
+        .catch(error => {
+            console.error(error);
+        })
+}
+
+ function cancelUpdate (event, updateFormContainer, data) {
+    event.preventDefault();
+    const miniPostContainer = document.createElement('div');
+    miniPostContainer.classList.add('m-3', 'p-3', 'mini-post', 'd-flex', 'justify-content-between');
+    miniPostContainer.dataset.id = data.id;
+    miniPostContainer.innerHTML = `
+        <p class="mb-0">${this.title}</p>
+        <p class="mb-0">${data.updatedAt}</p>
+    `;
+    updateFormContainer.parentNode.replaceChild(miniPostContainer, updateFormContainer);
+}
+
+const miniPosts = document.querySelectorAll('.mini-post');
+miniPosts.forEach(post => post.addEventListener('click', handlePostClick));
