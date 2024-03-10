@@ -32,7 +32,7 @@ document.querySelector('#create-post').addEventListener('click', createPost = as
             document.location.reload();
         }
         else if (response.status === 401) {
-            displayModal();
+            displayModal('r');
         }
     }
     else alert('Please enter a title and body before submitting');
@@ -47,7 +47,7 @@ const handlePostClick = (event) => {
     })
         .then(response => {
             if (response.status === 401){
-                displayModal();
+                displayModal('r');
             }
             else return response.json();
         })
@@ -105,12 +105,34 @@ const handleUpdate = async (data) => {
         document.location.reload();
     }
     else if (response.status === 401) {
-        displayModal();
+        displayModal('r');
     }
 }
 
-const handleDelete = async (data) => {
+const handleDelete = async (deleteID) => {
+    console.log(`Deleting post of id ${deleteID}...`);
+    //confirm, only proceed if confirmed
 
+    displayModal('c');
+    document.querySelector('#confirmYes').addEventListener('click', async () => {
+        const response = await fetch(`/api/blog/delete-post/${deleteID}`, {
+            method: 'DELETE', // Use the POST method
+            headers: { 'Content-Type': 'application/json' }, // Set request headers
+        })
+        if (response.ok) {
+            console.info("Post deleted!");
+            document.location.reload();
+        }
+        else if (response.status === 401) {
+            displayModal('r');
+        }
+    });
+    document.querySelector('#confirmNo').addEventListener('click', () => {
+        console.log("No clicked");
+        document.querySelector('#confirmModal').style.display = "none";
+    })
+
+    
 }
 
 const miniPosts = document.querySelectorAll('.mini-post');

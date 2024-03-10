@@ -1,5 +1,5 @@
 const router = require('express').Router(); // Import the Router class from Express
-const { User, BlogPost } = require('../../models'); // Import the User model
+const { User, BlogPost, Comment } = require('../../models'); // Import the User model
 
 
 router.get('/:id', async (req, res) => {
@@ -62,6 +62,32 @@ router.put('/update-post/:id', async (req, res) => {
         if (newData) {
             console.info(newData);
             res.status(200).json(newData);
+        }
+        
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+router.delete('/delete-post/:id', async (req, res) => {
+  try {
+    if (req.session.idle) {
+        res.status(401).json({"error": "Session is idle, log in again"});
+    }
+    else {
+        console.info("DELETE Route called... Attempting to delete blog post!");
+        console.info(`Deleting blog post of id: ${req.params.id}`);
+        await Comment.destroy({
+          where: { post_id: req.params.id }
+        })
+        const deletedData = await BlogPost.destroy({ 
+          where: { id: req.params.id } 
+        });
+        if (deletedData) {
+            console.info(deletedData);
+            res.status(200).json(deletedData);
         }
         
     }

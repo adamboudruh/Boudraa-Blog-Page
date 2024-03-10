@@ -1,5 +1,8 @@
-const displayModal = () => {
-    var modal = document.getElementById('reloginModal');
+const displayModal = (choice) => {
+    let modalID;
+    if (choice === 'r') modalID = 'reloginModal';
+    if (choice === 'c') modalID = 'confirmModal';
+    var modal = document.getElementById(modalID);
     var closeBtn = document.getElementsByClassName('close')[0];
 
     modal.style.display = "block";
