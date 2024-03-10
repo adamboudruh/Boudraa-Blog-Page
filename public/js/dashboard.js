@@ -31,7 +31,7 @@ document.querySelector('#create-post').addEventListener('click', createPost = as
             console.info("Post added!");
             document.location.reload();
         }
-        if (response.status === 401) {
+        else if (response.status === 401) {
             displayModal();
         }
     }
@@ -74,23 +74,43 @@ const handlePostClick = (event) => {
                 </form>
             `;
             clickedPost.parentNode.replaceChild(updateFormContainer, clickedPost);
-            document.querySelector('#cancel-update').addEventListener('click', () => cancelUpdate(event, updateFormContainer, data))
+
+            miniPosts.forEach(post => {
+                post.removeEventListener('click', handlePostClick);
+            });
+
+            document.querySelector('#cancel-update').addEventListener('click', () => document.location.reload());
+            document.querySelector('#update-post').addEventListener('click', (event) =>{ event.preventDefault(); handleUpdate(data);})
+            document.querySelector('#delete-post').addEventListener('click', (event) =>{ event.preventDefault(); handleDelete(data.id);})
         })
         .catch(error => {
             console.error(error);
         })
 }
 
- function cancelUpdate (event, updateFormContainer, data) {
-    event.preventDefault();
-    const miniPostContainer = document.createElement('div');
-    miniPostContainer.classList.add('m-3', 'p-3', 'mini-post', 'd-flex', 'justify-content-between');
-    miniPostContainer.dataset.id = data.id;
-    miniPostContainer.innerHTML = `
-        <p class="mb-0">${this.title}</p>
-        <p class="mb-0">${data.updatedAt}</p>
-    `;
-    updateFormContainer.parentNode.replaceChild(miniPostContainer, updateFormContainer);
+const handleUpdate = async (data) => {
+    const newTitle = document.querySelector('#update-title').value.trim();
+    const newContent = document.querySelector('#update-body').value.trim();
+    const postID = data.id;
+
+    console.log(`Updating blog post of id: ${postID}\nnew title: \n\n${newTitle}\n\nnew body:\n\n${newContent}`);
+
+    const response = await fetch(`/api/blog/update-post/${postID}`, {
+        method: 'PUT', // Use the POST method
+        body: JSON.stringify({ newTitle, newContent }), // Convert data to JSON format
+        headers: { 'Content-Type': 'application/json' }, // Set request headers
+    });
+    if (response.ok) {
+        console.info("Post added!");
+        document.location.reload();
+    }
+    else if (response.status === 401) {
+        displayModal();
+    }
+}
+
+const handleDelete = async (data) => {
+
 }
 
 const miniPosts = document.querySelectorAll('.mini-post');
