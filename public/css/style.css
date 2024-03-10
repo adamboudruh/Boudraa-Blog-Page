@@ -1,11 +1,27 @@
-footer {
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* footer {
     align-items: center;
     position: absolute;
     bottom: 0;
     left: 50;
     right: 50;
     color: #321C06;
-}
+} */
 
 nav a {
     text-decoration: none;
@@ -57,6 +73,22 @@ body {
     text-align: center;
 }
 
+.dash-title {
+    text-align: center;
+    color: #6B1107;
+}
+
+.mini-post {
+    background-color: #6B1107;
+    color: beige;
+}
+
+.dash-container {
+flex-grow: 1;
+display: flex;
+justify-content: center;
+}
+
 @media (min-width: 761px) {
     header h6 {
         color: beige;
@@ -64,4 +96,19 @@ body {
         top: 10px;
         right: 10px;
     }
+}
+
+.new-post-container {
+    width: 90%;
+    max-width: 560px;
+}
+
+.form-title {
+    color: beige;
+    text-align: center;
+}
+
+.my-posts {
+    width: 100%;
+    max-width: 900px;
 }

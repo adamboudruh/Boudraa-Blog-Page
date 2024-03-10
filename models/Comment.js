@@ -2,10 +2,10 @@ const { Model, DataTypes } = require('sequelize'); // Import necessary modules f
 const sequelize = require('../config/connection'); // Import the connection to the database
 
 // Define the Comments model, extending Sequelize's Model class
-class Comments extends Model {}
+class Comment extends Model {}
 
 // Initialize the Comments model with its attributes and options
-Comments.init(
+Comment.init(
     {
       // Define the 'id' attribute
       id: {
@@ -15,16 +15,16 @@ Comments.init(
         autoIncrement: true, // It auto-increments
       },
       // Define the 'content' attribute
-      content: {
+      body: {
         type: DataTypes.TEXT, // Data type is TEXT
         allowNull: false, // It cannot be null
       },
       // Define the 'game_id' attribute
-      game_id: {
-        type: DataTypes.STRING, // Data type is STRING
+      post_id: {
+        type: DataTypes.INTEGER, // Data type is INTEGER
         allowNull: false, // It cannot be null
         references: { // It references the 'id' attribute of the 'game' model
-          model: 'game',
+          model: 'blogpost',
           key: 'id',
         }
       },
@@ -41,8 +41,9 @@ Comments.init(
     {
       sequelize, // Pass the connection instance to the model
       timestamps: true, // Enable timestamps for createdAt and updatedAt columns
-      modelName: 'comments', // Set the model name
+      freezeTableName: true, // Do not pluralize the table name
+      modelName: 'comment', // Set the model name
     }
   );
 
-module.exports = Comments; // Export the Comments model for usage in other files
+module.exports = Comment; // Export the Comments model for usage in other files

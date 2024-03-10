@@ -1,29 +1,29 @@
 const User = require('./User'); // Import the User model
-const Comments = require('./Comments'); // Import the Comments model
-const Game = require('./Game'); // Import the Game model
+const Comment = require('./Comment'); // Import the Comments model
+const BlogPost = require('./BlogPost');
 
-// Define associations between models
-// User and Game association
-User.belongsTo(Game, { 
-    foreignKey: 'game_id' }); // Each user belongs to one game
-Game.hasMany(User, { 
-    foreignKey: 'game_id' }); // Each game can have multiple users
 
-// Comments and Game association
-Comments.belongsTo(Game, { 
-    foreignKey: 'game_id' }); // Each comment belongs to one game
-Game.hasMany(Comments, { 
-    foreignKey: 'game_id' }); // Each game can have multiple comments
+// User and Blog Posts association
+User.hasMany(BlogPost, {
+    foreignKey: 'user_id' });
+BlogPost.belongsTo(User, {
+    foreignKey: 'user_id' });
+
+// Comments and BlogPost association
+Comment.belongsTo(BlogPost, { 
+    foreignKey: 'post_id' }); // Each comment belongs to one game
+BlogPost.hasMany(Comment, { 
+    foreignKey: 'post_id' }); // Each game can have multiple comments
 
 // User and Comments association
-User.hasMany(Comments, { 
+User.hasMany(Comment, { 
     foreignKey: 'user_id' }); // Each user can have multiple comments
-Comments.belongsTo(User, { 
+Comment.belongsTo(User, { 
     foreignKey: 'user_id' }); // Each comment belongs to one user
 
 // Export the models for usage in other files
 module.exports = { 
     User,
-    Comments,
-    Game
+    Comment,
+    BlogPost
 };
