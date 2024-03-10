@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
 
     // If the email and password are correct, save the user's session
     req.session.save(() => {
-      req.session.user_data = userData; // Store user ID in the session
+      req.session.user_data = userData; // Store user data in the session
       req.session.logged_in = true; // Set logged_in flag to true in the session
       req.session.idle = false;
       // Send a response indicating successful login along with user data

@@ -23,6 +23,7 @@ router.get('/', async (req, res) => {
 
     // Render the 'homepage' view and pass in the user data and logged_in flag to the view
     res.render('homepage', {
+      idle: req.session.idle,
       blogPosts, // Pass the serialized blog data to the view
       comments,
       logged_in: req.session.logged_in, // Pass the logged_in variable to the view
@@ -45,12 +46,14 @@ router.get('/dashboard', async (req, res) => {
     });
     const blogPosts = userBlogData.map((project) => project.get({ plain: true }));
     res.render('dashboard', { 
+      idle: req.session.idle,
       blogPosts,
       logged_in: req.session.logged_in,
       user_data: req.session.user_data
     })
   } else { 
     res.render('dashboard', {
+      idle: req.session.idle,
       logged_in: req.session.logged_in,
       user_data: req.session.user_data
     }) 
@@ -60,13 +63,14 @@ router.get('/dashboard', async (req, res) => {
 // Route to render the login page
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect them to the homepage
-  if (req.session.logged_in) {
+  if (req.session.logged_in && !req.session.idle) {
     res.redirect('/');
     return;
   }
 
   // If the user is not logged in, render the 'login' view
   res.render('login', { 
+    idle: req.session.idle,
     logged_in: req.session.logged_in,
     user_data: req.session.user_data
   })
@@ -82,7 +86,9 @@ router.get('/signup', (req, res) => {
 
   // If the user is not logged in, render the 'signup' view
   res.render('signup', { 
+    idle: req.session.idle,
     logged_in: req.session.logged_in,
+    user_data: req.session.user_data
   })
 });
 

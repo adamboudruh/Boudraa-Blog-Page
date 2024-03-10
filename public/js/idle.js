@@ -1,17 +1,16 @@
 let idleTimer;
-const idleTimeout = 30000; // 30 seconds in milliseconds
+const idleTimeout = 120000; // 30 seconds in milliseconds
 
 const resetTimer = () => {
   clearTimeout(idleTimer);
-  console.log("Idle timer cleared, nothing to see here...");
   idleTimer = setTimeout( async () => {
     // Make a POST request to set session variable
-    alert("You have been idle too long!");
     const response = await fetch('/api/users/idle', {
       method: 'POST',
     });
     if (response.ok) {
         console.log('Session marked as idle');
+        document.location.reload();
     } else {
         console.error('Failed to mark session as idle');
     }
