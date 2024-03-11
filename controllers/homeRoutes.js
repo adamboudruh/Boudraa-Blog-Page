@@ -10,22 +10,40 @@ router.get('/', async (req, res) => {
   try {
     const blogData = await BlogPost.findAll({
       order: [['created_at', 'DESC']], 
-      include: User
+      include: [
+        { model: User, attributes: ['id', 'name'] },
+        { model: Comment,
+            include: [
+              {
+                model: User,
+                attributes: ['id', 'name'] // Optionally include user attributes
+              }
+            ]
+        }
+      ]
     });
 
     // Serialize the user data into plain objects
     const blogPosts = blogData.map((project) => project.get({ plain: true }));
-
-    const commentData = await Comment.findAll({
-      include: User
+    console.log("Passing blogs: \n" +blogPosts);
+    
+    blogPosts.forEach(blogPost => {
+        console.log(blogPost);
+        blogPost.comments.forEach(comment => console.log(comment));
+      console.log('------------------');
     });
-    const comments = commentData.map(comment => comment.get({plain: true}));
+
+    // const commentData = await Comment.findAll({
+    //   order: [['createdAt', 'DESC']],
+    //   include: User
+    // });
+    // const comments = commentData.map((project) => project.get({plain: true}));
+    // console.log("Passing comments: \n" +comments);
 
     // Render the 'homepage' view and pass in the user data and logged_in flag to the view
     res.render('homepage', {
       idle: req.session.idle,
       blogPosts, // Pass the serialized blog data to the view
-      comments,
       logged_in: req.session.logged_in, // Pass the logged_in variable to the view
       user_data: req.session.user_data
     });

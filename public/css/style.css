@@ -156,3 +156,19 @@ justify-content: center;
 #add-post {
     font-size: 24;
 }
+
+.full-post {
+    border: solid 3px #321C06;
+    width: 90%;
+    max-width: 850px;
+}
+
+.post-header {
+    background-color: #6B1107;
+    color: beige;
+}
+
+.post-body {
+    background-color: beige;
+    color: #321C06;
+}

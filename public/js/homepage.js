@@ -1,21 +1,25 @@
-require('dotenv').config();
-const axios = require('axios');
+const replyButtons = document.querySelectorAll('.reply-button');
+replyButtons.forEach(button => button.addEventListener('click', (event) => showCommentForm(event)));
 
-const loadNewGames = async () => {
-    try{
-        console.log(process.env.NODE_ENV);
-        const baseURL = process.env.NODE_ENV === 'production' 
-             ? 'http://localhost:3001/api/games/reloadgames' 
-             : 'https://pacific-shelf-77218-ba08c8175600.herokuapp.com/api/games/reloadgames'; // This checks if there is a variable called NODE_ENV in our env file set to equal 'production'. For some reason this was only working for me if I used an exact URL, so if there is that variable it assumes that we're testing it locally. If there isn't it uses the heroku url to fetch the data.
-        console.log(baseURL);
-        const response = await axios.get(`${baseURL}`)
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-  } catch (err) {console.log("Error running route: "+err)};
+let newCommentContainer; let newButtons; let previouslyClicked = false;
+
+function showCommentForm(event) {
+    event.preventDefault();
+    // replyButtons.forEach(button => button.removeEventListener('click', showCommentForm)); 
+    if (previouslyClicked) {
+        newCommentContainer.classList.add('d-none');
+        newButtons.classList.remove('d-none');
+        newCommentContainer.querySelector('textarea').setAttribute('id', '');
+    }
+
+    newButtons = event.target.closest('.body-buttons');
+    newButtons.classList.add('d-none');
+
+    let parentDiv = event.target.closest('.full-post');
+    newCommentContainer = parentDiv.querySelector('.new-comment-container');
+    newCommentContainer.classList.remove('d-none');
+    newCommentContainer.querySelector('textarea').setAttribute('id', 'comment-body');
+
+    previouslyClicked = true;
 }
 
-module.exports = {loadNewGames};

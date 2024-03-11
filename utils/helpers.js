@@ -30,5 +30,16 @@ module.exports = {
         
         const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
         return formattedDate.replace(',', ' at');
+    },
+    formatDate: (date) => {
+        const d = new Date(date);
+        const options = {
+            month: '2-digit',
+            day: '2-digit',
+            year: 'numeric'
+        };
+            
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(d);
+        return formattedDate;
     }
 };

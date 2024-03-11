@@ -1,37 +1,60 @@
 <h2>This is the homepage</h2>
 
-{{!-- <div class="text-center">
-    <div class="hero">
-        <div class="hero-text">
-            <h1>Unlock Your Winning Potential: Bet Smart, Win Big, Daily</h1>
-            <p>All for Free-Welcome to the Community</p>
+{{#if blogPosts}}
+    {{#each blogPosts}}
+        <div data-id={{this.id}} class="m-3 full-post">
+            <div class="p-2 post-header d-flex justify-content-between">
+                <p class="mb-0">{{this.title}}</p>
+                <p class="mb-0">Posted by {{this.user.name}} on {{formatDate this.updatedAt}}</p>
+            </div>
+            <div class="post-body p-1">
+                <p>{{this.body}}</p>
+                <div class="d-flex body-buttons justify-content-between">
+                    <button class="view-replies m-2">View Replies</button>
+                    <button class="reply-button m-2">Reply</button>
+                </div>
+                
+            </div>
+            <div class=" login-form m-5 new-comment-container d-none">
+                <form class="form mb-0 p-3 pb-2">
+                    <div class="form-group">
+                        <label for="comment-body{{this.id}}">Enter comment below:</label>
+                        <textarea class="form-control" id="" rows="3"></textarea>
+                    </div>
+                    <div class=" pt-3 comment-buttons d-flex justify-content-between">
+                        <button>Post Comment</button>
+                        <button>Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-</div>
+        
+        <div class="m-3 comments-container full-post">
+            <div class="comments-container-header">
+                <p>Comments: </p>
+            </div>
+            <div class="comments-body">
+                <h4 class="d-none">NO COMMENTS</h4>
+                {{#if this.comments}}
+                    {{#each this.comments}}
+                        <div class="comment-header">
+                            <p>{{user.name}}</p>
+                            <p>{{formatDate createdAt}}</p>
+                        </div>
+                        <div class="comment-body">
+                            <p>{{body}}</p>
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <h3>NO COMMENTS</h3>
+                {{/if}}
+                
+            </div>
+            
+        </div>
+    {{/each}}
+{{else}}
+    <h3 class="text-center">NO BLOG POSTS</h3>
+{{/if}}
 
-<div class="welcome">
-  <div class="container text-center">
-        <div class="row justify-content-start">
-        <div class="col-6">
-            <a href="/login">
-            <button class="login-btn"> Login</button>
-            </a>
-        </div>
-        <div class="col-6">
-            <a href="/signup">
-            <button class="signup-btn"> Sign-up</button>
-            </a>
-        </div>
-        </div>
-
-        <div class="row justify-content-center">
-        <div class="col-12">
-            <a href="/api/games/upcoming">
-            <button class="upcoming-btn"> Upcoming</button>
-            </a>
-        </div>
-    </div>
-
-</div>
-
-<script src="/js/homepage.js"></script> --}}
+<script src="/js/homepage.js"></script>
