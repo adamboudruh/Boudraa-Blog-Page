@@ -1,16 +1,16 @@
-<h2>This is the homepage</h2>
-
 {{#if blogPosts}}
-    {{#each blogPosts}}
-        <div data-id={{this.id}} class="m-3 full-post">
+{{#each blogPosts}}
+        <div class="blog-comment-container">
+        <div data-id={{this.id}} class="m-3 mb-1 full-post">
             <div class="p-2 post-header d-flex justify-content-between">
                 <p class="mb-0">{{this.title}}</p>
+                <div class="spacer"></div>
                 <p class="mb-0">Posted by {{this.user.name}} on {{formatDate this.updatedAt}}</p>
             </div>
             <div class="post-body p-1">
-                <p>{{this.body}}</p>
+                <p class="mb-0 p-2">{{this.body}}</p>
                 <div class="d-flex body-buttons justify-content-between">
-                    <button class="view-replies m-2">View Replies</button>
+                    <button class="view-replies m-2">Replies</button>
                     <button class="reply-button m-2">Reply</button>
                 </div>
                 
@@ -29,30 +29,29 @@
             </div>
         </div>
         
-        <div class="m-3 comments-container full-post">
-            <div class="comments-container-header">
-                <p>Comments: </p>
+        <div class="m-3 mt-0 comments-container full-post d-none">
+            <div class="comments-container-header p-2">
+                <p class="mb-0">Comments: </p>
             </div>
-            <div class="comments-body">
-                <h4 class="d-none">NO COMMENTS</h4>
-                {{#if this.comments}}
-                    {{#each this.comments}}
-                        <div class="comment-header">
-                            <p>{{user.name}}</p>
-                            <p>{{formatDate createdAt}}</p>
+            {{#if this.comments}}
+                {{#each this.comments}}
+                    <div class="p-0 m-3 single-comment-container">
+                        <div class="px-2 comment-header d-flex justify-content-between">
+                            <p class="mb-0">{{user.name}}</p>
+                            <p class="mb-0">{{formatDate createdAt}}</p>
                         </div>
-                        <div class="comment-body">
-                            <p>{{body}}</p>
+                        <div class="p-1 comment-body">
+                            <p class="mb-0">{{body}}</p>
                         </div>
-                    {{/each}}
-                {{else}}
-                    <h3>NO COMMENTS</h3>
-                {{/if}}
-                
-            </div>
-            
+                    </div>
+                {{/each}}
+            {{else}}
+                <h3 class="text-center p-2">NO COMMENTS</h3>
+            {{/if}}
+        </div>
         </div>
     {{/each}}
+    
 {{else}}
     <h3 class="text-center">NO BLOG POSTS</h3>
 {{/if}}

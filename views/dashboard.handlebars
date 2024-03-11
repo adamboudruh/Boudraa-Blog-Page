@@ -6,6 +6,7 @@
                 {{#each blogPosts}}
                     <div data-id={{this.id}} class="m-3 p-3 mini-post d-flex justify-content-between">
                         <p class="mb-0">{{this.title}}</p>
+                        <div class="spacer"></div>
                         <p class="mb-0">{{formatTime this.updatedAt}}</p>
                     </div>
                 {{/each}}

@@ -172,3 +172,29 @@ justify-content: center;
     background-color: beige;
     color: #321C06;
 }
+
+.comments-container-header {
+    background-color: #321C06;
+    color: beige;
+}
+
+.single-comment-container {
+    border: solid 1px black;
+}
+
+.comment-header {
+    background-color: #5c5151;
+    color: white;
+}
+
+.blog-comment-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spacer {
+    width: 30px;
+    min-width: 30px;
+  }

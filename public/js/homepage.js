@@ -23,3 +23,14 @@ function showCommentForm(event) {
     previouslyClicked = true;
 }
 
+const viewButtons = document.querySelectorAll('.view-replies');
+viewButtons.forEach(button => button.addEventListener('click', (event) => showReplies(event)));
+
+function showReplies(event) {
+    event.preventDefault();
+    let parentDiv = event.target.closest('.blog-comment-container');
+    parentDiv.querySelector('.comments-container').classList.toggle('d-none');
+}
+
+
+
