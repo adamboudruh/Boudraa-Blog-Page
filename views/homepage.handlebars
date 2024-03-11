@@ -10,19 +10,19 @@
             <div class="post-body p-1">
                 <p class="mb-0 p-2">{{this.body}}</p>
                 <div class="d-flex body-buttons justify-content-between">
-                    <button class="view-replies m-2">Replies</button>
+                    <button class="view-replies m-2">Comments</button>
                     <button class="reply-button m-2">Reply</button>
                 </div>
                 
             </div>
-            <div class=" login-form m-5 new-comment-container d-none">
+            <div class=" login-form m-3 new-comment-container d-none">
                 <form class="form mb-0 p-3 pb-2">
                     <div class="form-group">
-                        <label for="comment-body{{this.id}}">Enter comment below:</label>
-                        <textarea class="form-control" id="" rows="3"></textarea>
+                        <label>Enter comment below:</label>
+                        <textarea class="form-control" rows="3"></textarea>
                     </div>
                     <div class=" pt-3 comment-buttons d-flex justify-content-between">
-                        <button>Post Comment</button>
+                        <button class="post-comment">Post Comment</button>
                         <button>Cancel</button>
                     </div>
                 </form>
@@ -56,4 +56,4 @@
     <h3 class="text-center">NO BLOG POSTS</h3>
 {{/if}}
 
-<script src="/js/homepage.js"></script>
+<script src="/js/homepage.js" type="module"></script>

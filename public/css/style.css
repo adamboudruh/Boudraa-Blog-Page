@@ -99,6 +99,13 @@ justify-content: center;
     }
 }
 
+@media (min-width: 900px) {
+    .new-comment-container {
+        margin-left: 140px !important;
+        margin-right: 140px !important;
+    }
+}
+
 .new-post-container {
     width: 90%;
     max-width: 560px;
