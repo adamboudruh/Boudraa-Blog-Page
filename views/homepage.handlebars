@@ -35,13 +35,16 @@
             </div>
             {{#if this.comments}}
                 {{#each this.comments}}
-                    <div class="p-0 m-3 single-comment-container">
+                    <div class="p-0 m-3 single-comment-container" data-id={{id}}>
                         <div class="px-2 comment-header d-flex justify-content-between">
                             <p class="mb-0">{{user.name}}</p>
                             <p class="mb-0">{{formatDate createdAt}}</p>
                         </div>
-                        <div class="p-1 comment-body">
-                            <p class="mb-0">{{body}}</p>
+                        <div class="p-1 comment-body d-flex">
+                            <p class="mb-0 pr-4">{{body}}</p>
+                            {{#if (eq user.id ../../user_data.id )}}
+                                <button class="delete-comment btn-danger">🗑</button>
+                            {{/if}}
                         </div>
                     </div>
                 {{/each}}

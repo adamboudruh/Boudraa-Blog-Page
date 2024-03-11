@@ -129,7 +129,7 @@ const handleDelete = async (deleteID) => {
     });
     document.querySelector('#confirmNo').addEventListener('click', () => {
         console.log("No clicked");
-        document.querySelector('#confirmModal').style.display = "none";
+        document.querySelector('.confirmModal').style.display = "none";
     })
 
     

@@ -28,5 +28,27 @@ router.post('/new', async (req, res) => {
   }
 });
 
+router.delete('/delete-comment/:id', async (req, res) => {
+    try {
+      if (req.session.idle) {
+          res.status(401).json({"error": "Session is idle, log in again"});
+      }
+      else {
+          console.info("DELETE Route called... Attempting to delete comment!");
+          console.info(`Deleting comment of id: ${req.params.id}`);
+          const deletedData = await Comment.destroy({
+            where: { id: req.params.id }
+          })
+          if (deletedData) {
+              console.info(deletedData);
+              res.status(200).json(deletedData);
+          }
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
+
 
 module.exports = router; // Export the router module for usage in other files

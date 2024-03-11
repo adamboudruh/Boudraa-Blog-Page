@@ -2,6 +2,7 @@ const displayModal = (choice) => {
     let modalID;
     if (choice === 'r') modalID = 'reloginModal';
     if (choice === 'c') modalID = 'confirmModal';
+    if (choice === 'd') modalID = 'deleteModal';
     var modal = document.getElementById(modalID);
     var closeBtn = document.getElementsByClassName('close')[0];
 

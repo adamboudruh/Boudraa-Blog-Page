@@ -204,4 +204,20 @@ justify-content: center;
 .spacer {
     width: 30px;
     min-width: 30px;
-  }
+}
+
+.comment-body p {
+    width: 100%;
+}
+
+.delete-comment {
+    font-size: 20px;
+    position: relative;
+    max-height: 32px;
+    max-width: 32px;
+}
+
+.delete-comment:hover {
+    background-color: red;
+    color: white;
+}
