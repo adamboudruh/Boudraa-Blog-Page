@@ -12,7 +12,7 @@ router.post('/new', async (req, res) => {
     else {
         console.info("POST Route called... Attempting to create comment!");
         console.info(`\nBody: ${req.body.commentBody}\n\nPost ID: ${req.body.postID}`);
-        const commentData = await Comment.create({ // Creates a row in the User table with the new data
+        const commentData = await Comment.create({
             post_id: req.body.postID,
             body: req.body.commentBody,
             user_id: req.session.user_data.id,

@@ -1,19 +1,4 @@
-const moment = require('moment');
-
 module.exports = {
-    when: (operand_1, operator, operand_2, options) => {
-        var operators = {
-            '===': function(l,r) { return l === r; },
-            '!==': function(l,r) { return l !== r; }
-        }
-        const result = operators[operator](operand_1,operand_2);
-        
-        if (result) return options.fn(this);
-        else  return options.inverse(this);
-    },
-    formatTimeAgo: (date) => {
-        return moment(date).fromNow();
-    },
     eq: (a, b) => {
         return a === b; //Simplified version of the when function, just so I can use it in conjunction with if statements to maintain the context
     },
@@ -28,8 +13,8 @@ module.exports = {
             year: 'numeric'
         };
         
-        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-        return formattedDate.replace(',', ' at');
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date); 
+        return formattedDate.replace(',', ' at'); // Returns date in 'MM/DD/YYY at HH:MM' format
     },
     formatDate: (date) => {
         const d = new Date(date);
@@ -39,7 +24,7 @@ module.exports = {
             year: 'numeric'
         };
             
-        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(d);
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(d); // Returns 'MM/DD/YYYY'
         return formattedDate;
     }
 };

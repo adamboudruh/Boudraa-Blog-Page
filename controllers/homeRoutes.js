@@ -12,11 +12,11 @@ router.get('/', async (req, res) => {
       order: [['created_at', 'DESC']], 
       include: [
         { model: User, attributes: ['id', 'name'] },
-        { model: Comment,
+        { model: Comment, //Each BlogPost object will have its own array object of all the comments that it has
             include: [
               {
                 model: User,
-                attributes: ['id', 'name'] // Optionally include user attributes
+                attributes: ['id', 'name']
               }
             ]
         }
@@ -33,14 +33,6 @@ router.get('/', async (req, res) => {
       console.log('------------------');
     });
 
-    // const commentData = await Comment.findAll({
-    //   order: [['createdAt', 'DESC']],
-    //   include: User
-    // });
-    // const comments = commentData.map((project) => project.get({plain: true}));
-    // console.log("Passing comments: \n" +comments);
-
-    // Render the 'homepage' view and pass in the user data and logged_in flag to the view
     res.render('homepage', {
       idle: req.session.idle,
       blogPosts, // Pass the serialized blog data to the view
@@ -63,14 +55,14 @@ router.get('/dashboard', async (req, res) => {
       order: [['created_at', 'DESC']]
     });
     const blogPosts = userBlogData.map((project) => project.get({ plain: true }));
-    res.render('dashboard', { 
+    res.render('dashboard', {  // If user is logged in, render the dashboard with an array of all the blog posts belonging to them
       idle: req.session.idle,
       blogPosts,
       logged_in: req.session.logged_in,
       user_data: req.session.user_data
     })
   } else { 
-    res.render('dashboard', {
+    res.render('login', { // If not logged in, redirect to login page
       idle: req.session.idle,
       logged_in: req.session.logged_in,
       user_data: req.session.user_data

@@ -1,3 +1,9 @@
+:root {
+    --main-bg: beige;
+    --accent: #321C06;
+    --secondary-accent: #6B1107;
+}
+
 html, body {
     height: 100%;
 }
@@ -20,31 +26,31 @@ main {
     bottom: 0;
     left: 50;
     right: 50;
-    color: #321C06;
+    color: var(--accent);
 } */
 
 nav a {
     text-decoration: none;
-    color: beige;
+    color: var(--main-bg);
 }
 
 h1 {
     font-size: 58;
     font-weight: lighter;
-    color: beige;
+    color: var(--main-bg);
 }
 
 nav a:hover {
-    background-color: #6B1107;
+    background-color: var(--secondary-accent);
     transform: scale(1.5,1);
 }
 
 header {
-    background-color: #321C06
+    background-color: var(--accent)
 }
 
 body {
-    background-color: beige
+    background-color: var(--main-bg)
 }
 
 * {
@@ -52,22 +58,22 @@ body {
 }
 
 .login-form {
-    background-color: #321C06;
-    border: 6px solid #6B1107;
+    background-color: var(--accent);
+    border: 6px solid var(--secondary-accent);
 }
 
 .login-form label {
-    color: beige;
+    color: var(--main-bg);
 }
 
 .login-form button {
-    color: beige;
-    background-color: #6B1107;
+    color: var(--main-bg);
+    background-color: var(--secondary-accent);
 }
 
 .login-form button:hover {
-    color: #6B1107;
-    background-color: beige;
+    color: var(--secondary-accent);
+    background-color: var(--main-bg);
 }
 
 .login-title {
@@ -76,12 +82,12 @@ body {
 
 .dash-title {
     text-align: center;
-    color: #6B1107;
+    color: var(--secondary-accent);
 }
 
 .mini-post {
-    background-color: #6B1107;
-    color: beige;
+    background-color: var(--secondary-accent);
+    color: var(--main-bg);
 }
 
 .dash-container {
@@ -92,7 +98,7 @@ justify-content: center;
 
 @media (min-width: 761px) {
     header h6 {
-        color: beige;
+        color: var(--main-bg);
         position: absolute;
         top: 10px;
         right: 10px;
@@ -112,7 +118,7 @@ justify-content: center;
 }
 
 .form-title {
-    color: beige;
+    color: var(--main-bg);
     text-align: center;
 }
 
@@ -165,24 +171,24 @@ justify-content: center;
 }
 
 .full-post {
-    border: solid 3px #321C06;
+    border: solid 3px var(--accent);
     width: 90%;
     max-width: 850px;
 }
 
 .post-header {
-    background-color: #6B1107;
-    color: beige;
+    background-color: var(--secondary-accent);
+    color: var(--main-bg);
 }
 
 .post-body {
-    background-color: beige;
-    color: #321C06;
+    background-color: var(--main-bg);
+    color: var(--accent);
 }
 
 .comments-container-header {
-    background-color: #321C06;
-    color: beige;
+    background-color: var(--accent);
+    color: var(--main-bg);
 }
 
 .single-comment-container {

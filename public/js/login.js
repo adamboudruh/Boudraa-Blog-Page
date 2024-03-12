@@ -17,24 +17,12 @@ const loginFormHandler = async (event) => {
 
     // Check if the response is ok (status code 200-299)
     if (response.ok) {
-      // If login is successful, redirect the user to the homepage
       document.location.replace('/');
     } else {
-      // If login fails, display an alert message
       alert('Failed to log in');
     }
   }
 };
-
-const buttons = document.querySelectorAll('.game-button');
-buttons.forEach(button => {
-  button.addEventListener('click', async () => {
-    let id = this.getAttribute('data-id');
-    const response = await fetch(`/api/game/:${id}`);
-    if (response.ok) { console.log('Success! Taken to that game`s page') }
-    else alert("ERROR! Idk what happened");
-  })
-})
 
 document
   .querySelector('.login-form')

@@ -1,24 +1,24 @@
-import { displayModal } from "./modal.js";
+import { displayModal } from "./modal.js"; // imports the modal function from modal.js to decrease repetition
 
 document.querySelector('#add-post').addEventListener('click', function () {
     console.log("Displaying post form...");
     document.querySelector('.new-post-container').classList.remove('d-none');
     document.querySelector('#add-post').classList.add('d-none');
-});
+}); // Displays the form for the user to enter info for a new post
 
 document.querySelector('#cancel-create').addEventListener('click', function (event) {
     event.preventDefault();
     console.log("Hiding post form...");
     document.querySelector('.new-post-container').classList.add('d-none');
     document.querySelector('#add-post').classList.remove('d-none');
-});
+}); // Hides the form and brings back the button
 
 let createPost;
 document.querySelector('#create-post').addEventListener('click', createPost = async (event) => {
     event.preventDefault();
     console.log("Adding post...");
     const title = document.querySelector('#post-title').value.trim();
-    const content = document.querySelector('#post-body').value.trim();
+    const content = document.querySelector('#post-body').value;
     if (title && content) {
         console.log(`Creating blog post titled: \n\n${title}\n\nwith body:\n\n${content}`);
         const response = await fetch('/api/blog/create-post', {
@@ -26,16 +26,15 @@ document.querySelector('#create-post').addEventListener('click', createPost = as
             body: JSON.stringify({ title, content }), // Convert data to JSON format
             headers: { 'Content-Type': 'application/json' }, // Set request headers
         });
-        // if response status is 401, make a modal pop up in the center of the screen asking them to relogin with a link to the log in screen
         if (response.ok) {
             console.info("Post added!");
             document.location.reload();
         }
-        else if (response.status === 401) {
+        else if (response.status === 401) { // if response status is 401, make a modal pop up in the center of the screen asking them to relogin with a link to the log in screen
             displayModal('r');
         }
     }
-    else alert('Please enter a title and body before submitting');
+    else alert('Please enter a title and body before submitting'); // alert only pops up if 
 });
 
 const handlePostClick = (event) => {
@@ -51,8 +50,7 @@ const handlePostClick = (event) => {
             }
             else return response.json();
         })
-        .then(data => {
-            console.log(data);
+        .then(data => { // this data from the get request is used to pre-populate the update/delete form with the previous data
             const updateFormContainer = document.createElement('div');
             updateFormContainer.classList.add('update-post-container');
             updateFormContainer.innerHTML = `
@@ -72,7 +70,7 @@ const handlePostClick = (event) => {
                         <button class="btn py-2 px-3" id="cancel-update">Cancel</button>
                     </div>
                 </form>
-            `;
+            `; //This is the form that replaces the mini-post on the dashboard. It has update and delete options
             clickedPost.parentNode.replaceChild(updateFormContainer, clickedPost);
 
             miniPosts.forEach(post => {
@@ -81,7 +79,7 @@ const handlePostClick = (event) => {
 
             document.querySelector('#cancel-update').addEventListener('click', () => document.location.reload());
             document.querySelector('#update-post').addEventListener('click', (event) =>{ event.preventDefault(); handleUpdate(data);})
-            document.querySelector('#delete-post').addEventListener('click', (event) =>{ event.preventDefault(); handleDelete(data.id);})
+            document.querySelector('#delete-post').addEventListener('click', (event) =>{ event.preventDefault(); handleDelete(data.id);}) // listeners for the three buttons in the form
         })
         .catch(error => {
             console.error(error);
@@ -90,7 +88,7 @@ const handlePostClick = (event) => {
 
 const handleUpdate = async (data) => {
     const newTitle = document.querySelector('#update-title').value.trim();
-    const newContent = document.querySelector('#update-body').value.trim();
+    const newContent = document.querySelector('#update-body').value;
     const postID = data.id;
 
     console.log(`Updating blog post of id: ${postID}\nnew title: \n\n${newTitle}\n\nnew body:\n\n${newContent}`);
@@ -113,7 +111,7 @@ const handleDelete = async (deleteID) => {
     console.log(`Deleting post of id ${deleteID}...`);
     //confirm, only proceed if confirmed
 
-    displayModal('c');
+    displayModal('c'); // displays a modal asking the user to confirm if they want the post deleted, delete route will only be called if yes is clicked
     document.querySelector('#confirmYes').addEventListener('click', async () => {
         const response = await fetch(`/api/blog/delete-post/${deleteID}`, {
             method: 'DELETE', // Use the POST method
