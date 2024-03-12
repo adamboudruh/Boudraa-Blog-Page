@@ -6,6 +6,8 @@
 ## Description
 This application is a blogpage. Anyone with an account can make posts or comment on other people's posts, and it will show up on the homepage. You can also modify or delete your posts and comments if you wish to do so.
 
+## Link to deployed site:
+https://evening-tundra-87710-7eb66c5c7750.herokuapp.com/ 
 
 ## Table of Contents
 
