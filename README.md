@@ -8,6 +8,7 @@ This application is a blogpage. Anyone with an account can make posts or comment
 
 ## Link to deployed site:
 https://evening-tundra-87710-7eb66c5c7750.herokuapp.com/ 
+![alt text](./public/images/screenshot.png)
 
 ## Table of Contents
 
